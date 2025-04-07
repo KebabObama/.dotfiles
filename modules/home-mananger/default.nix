@@ -1,5 +1,6 @@
 {inputs, username, host, ...}: {
   imports = [
+    ./browser.nix                     # Firefox
     ./fzf.nix                         # fuzzy finder
     ./git.nix                         # version control
     ./gtk.nix                         # gtk theme
