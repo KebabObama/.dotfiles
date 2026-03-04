@@ -1,0 +1,12 @@
+keys:
+  - &main age1xzhltltngvkeggyew4h7mqhrf2ulhg8qaakcwlum9eafm95xkezqp9z3jh
+  - &host age1ulm6p3ldda53qz237g4jk032ux0j8aty22unrv8mrrm4r3rwvv8sltlpk4
+  - &user age1yp0azlq49w2n2kzn90mu3y9q39tcp7lumpszgl0x84uu65w3dpfs9ttn5k
+
+creation_rules:
+  - path_regex: .*
+    key_groups:
+      - age:
+          - *main
+          - *host
+          - *user
