@@ -3,8 +3,6 @@
     fwupd.enable = true;
     upower.enable = true;
     power-profiles-daemon.enable = true;
-    printing.enable = true;
-    avahi.enable = true;
     xserver = {
       enable = true;
       excludePackages = [pkgs.xterm];

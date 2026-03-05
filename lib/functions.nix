@@ -71,6 +71,14 @@
       rm -rf /tmp/sops-deploy
     '';
 
+  mkScriptPkgs = pkgs: dir:
+    lib.pipe (builtins.readDir dir) [
+      (lib.filterAttrs (name: type: type == "regular" && lib.hasSuffix ".sh" name))
+      (lib.mapAttrsToList (
+        name: _: pkgs.writeScriptBin (lib.removeSuffix ".sh" name) (builtins.readFile (dir + "/${name}"))
+      ))
+    ];
+
   getNixosModules = host:
     scanForModules (getPath staticNixosSystem) ++ scanForModules (getPath (fill hostModulesTemplate {inherit host;}));
 
