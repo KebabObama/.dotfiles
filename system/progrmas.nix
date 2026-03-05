@@ -15,11 +15,11 @@
     esac
   '';
 in {
-  environment.systemPackages = [
-    inputs.disko.packages.${pkgs.stdenv.hostPlatform.system}.default
-    pkgs.wget
-    pkgs.curl
-    pkgs.sops
+  environment.systemPackages = with pkgs; [
+    inputs.disko.packages.${stdenv.hostPlatform.system}.default
+    wget
+    curl
+    sops
   ];
 
   services.envfs.enable = lib.mkDefault true;

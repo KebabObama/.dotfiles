@@ -4,8 +4,7 @@
     nix-index-database.comma.enable = true;
     zoxide = {
       enable = true;
-      enableBashIntegration = true;
-      package = pkgs.zoxide;
+      enableBashIntegration = false;
     };
 
     direnv = {
@@ -27,6 +26,7 @@
       initExtra = ''
         # bash
         source "$HOME/.profile"
+        eval $(zoxide init bash)
         if [[ "$TERM_PROGRAM" != "vscode" ]]; then
           source "${pkgs.blesh}/share/blesh/ble.sh"
           ble-import -f integration/zoxide

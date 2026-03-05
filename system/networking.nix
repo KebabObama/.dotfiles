@@ -8,11 +8,28 @@
   services = {
     fail2ban.enable = lib.mkDefault false;
     resolved.enable = lib.mkDefault true;
+
+    avahi = {
+      enable = lib.mkDefault false;
+      nssmdns4 = lib.mkDefault true;
+      openFirewall = lib.mkDefault true;
+    };
+
     openssh = {
       enable = lib.mkDefault false;
       settings.PrintMotd = lib.mkDefault false;
       authorizedKeysFiles = lib.mkBefore [config.sops.secrets.hell-rsa-pub.path];
       hostKeys = [];
+    };
+
+    printing = {
+      enable = lib.mkDefault false;
+      drivers = lib.mkBefore [
+        pkgs.gutenprint
+        pkgs.hplip
+        pkgs.canon-cups-ufr2
+        pkgs.cnijfilter2
+      ];
     };
   };
 

@@ -43,7 +43,6 @@
       "ctrl+shift+w" = "close_window";
       "ctrl+shift+]" = "next_window";
       "ctrl+shift+[" = "previous_window";
-      "ctrl+r" = "clear_terminal scrollback active";
       "ctrl+shift+r" = "reload_config";
       "ctrl+=" = "increase_font_size";
       "ctrl+-" = "decrease_font_size";
