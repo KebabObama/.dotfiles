@@ -7,15 +7,6 @@
   pkgs,
   ...
 }: let
-  passwords =
-    lib.genAttrs
-    (data.users or [data.primaryUser])
-    (username: {
-      key = username;
-      sopsFile = ./secrets.yaml;
-      neededForUsers = true;
-    });
-
   tokens = [
     "hell-rsa-pub"
     "github-token"
@@ -23,7 +14,7 @@
     "final-boss"
   ];
 
-  allUsers = data.users or [data.primaryUser];
+  users = data.users or [config.primaryUser];
   mkUser = u: {
     isNormalUser = true;
     description = u;
@@ -45,7 +36,7 @@ in {
     groups.tokens.name = "tokens";
     mutableUsers = lib.mkDefault false;
     defaultUserShell = lib.mkDefault pkgs.bash;
-    users = lib.genAttrs allUsers mkUser;
+    users = lib.genAttrs users mkUser;
   };
 
   sops = {
@@ -58,10 +49,14 @@ in {
     };
 
     secrets = lib.mkMerge [
-      passwords
+      (lib.genAttrs users (name: {
+        key = name;
+        sopsFile = ./secrets.yaml;
+        neededForUsers = true;
+      }))
       (lib.genAttrs tokens (name: {
         key = name;
-        owner = data.primaryUser;
+        owner = config.primaryUser;
         group = "tokens";
         mode = "0600";
       }))

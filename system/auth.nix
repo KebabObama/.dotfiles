@@ -1,5 +1,4 @@
 {
-  data,
   lib,
   pkgs,
   config,
@@ -42,7 +41,7 @@
 
     autoLogin = {
       enable = config.preferSingleUser;
-      user = lib.mkDefault data.primaryUser;
+      user = lib.mkDefault config.primaryUser;
     };
   };
 
