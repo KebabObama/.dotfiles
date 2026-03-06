@@ -5,6 +5,7 @@
     enable = true;
     suppressXdgMigrationWarning = true;
     profiles.default = {
+      isDefault = true;
       userChrome = builtins.readFile ./userChrome.css;
       settings = {
         "browser.ai.control.default" = "blocked";

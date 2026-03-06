@@ -18,4 +18,8 @@
     LC_TIME = lib.mkDefault "en_US.UTF-8";
   };
   console.keyMap = lib.mkDefault "cz-qwertz";
+  services.xserver.xkb = {
+    layout = "cz";
+    variant = "";
+  };
 }

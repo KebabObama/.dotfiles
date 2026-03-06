@@ -24,12 +24,14 @@
 
     printing = {
       enable = lib.mkDefault false;
-      drivers = lib.mkBefore [
-        pkgs.gutenprint
-        pkgs.hplip
-        pkgs.canon-cups-ufr2
-        pkgs.cnijfilter2
-      ];
+      webInterface = lib.mkDefault true;
+      defaultShared = lib.mkDefault true;
+      drivers = lib.mkBefore (with pkgs; [
+        cups-filters
+        cups-browsed
+        canon-cups-ufr2
+        cnijfilter2
+      ]);
     };
   };
 

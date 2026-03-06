@@ -5,7 +5,7 @@
   ...
 } @ inputs: let
   inherit (nixpkgs) lib;
-  configuration = import ./configurations.nix {inherit self inputs;};
+  configuration = (lib.importJSON ../configurations.json) // {inherit self inputs;};
   functions = import ./functions.nix configuration lib;
   hostConfigs = functions.mkHostConfigs;
   pkgs = nixpkgs.legacyPackages.${configuration.system};

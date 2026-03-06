@@ -12,7 +12,7 @@
     (data.users or [data.primaryUser])
     (username: {
       key = username;
-      sopsFile = ./users.yaml;
+      sopsFile = ./secrets.yaml;
       neededForUsers = true;
     });
 
@@ -32,21 +32,24 @@
   };
 in {
   imports = [inputs.sops-nix.nixosModules.sops];
-  environment.sessionVariables.SOPS_AGE_KEY_FILE = "/var/lib/sops-nix/key.txt";
-  users.groups.tokens.name = "tokens";
   system.stateVersion = stateVersion;
   nixpkgs.config.allowUnfree = lib.mkDefault true;
   services.udisks2.enable = lib.mkDefault true;
   security.polkit.enable = lib.mkDefault true;
-  environment.systemPackages = with pkgs; [ntfs3g];
+  environment = {
+    systemPackages = with pkgs; [ntfs3g];
+    sessionVariables.SOPS_AGE_KEY_FILE = "/var/lib/sops-nix/key.txt";
+    sessionVariables.SOPS_AGE_SSH_PRIVATE_KEY_FILE = "/etc/ssh/ssh_host_ed25519_key";
+  };
   users = {
+    groups.tokens.name = "tokens";
     mutableUsers = lib.mkDefault false;
     defaultUserShell = lib.mkDefault pkgs.bash;
     users = lib.genAttrs allUsers mkUser;
   };
 
   sops = {
-    defaultSopsFile = lib.mkDefault ./tokens.yaml;
+    defaultSopsFile = lib.mkDefault ./secrets.yaml;
 
     age = {
       keyFile = lib.mkDefault "/var/lib/sops-nix/key.txt";
