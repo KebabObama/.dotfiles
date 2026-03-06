@@ -1,5 +1,7 @@
 {lib, ...}: {
   time.timeZone = lib.mkDefault "Europe/Prague";
+  console.keyMap = lib.mkDefault "cz-qwertz";
+  services.xserver.xkb.layout = lib.mkDefault "cz";
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LANGUAGE = lib.mkDefault "en_US.UTF-8";
@@ -16,10 +18,5 @@
     LC_PAPER = lib.mkDefault "en_US.UTF-8";
     LC_TELEPHONE = lib.mkDefault "en_US.UTF-8";
     LC_TIME = lib.mkDefault "en_US.UTF-8";
-  };
-  console.keyMap = lib.mkDefault "cz-qwertz";
-  services.xserver.xkb = {
-    layout = "cz";
-    variant = "";
   };
 }

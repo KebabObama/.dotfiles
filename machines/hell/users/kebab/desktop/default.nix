@@ -1,31 +1,24 @@
-let
+{pkgs, ...}: let
   text = [
     "vim.desktop"
     "code.desktop"
   ];
 in {
-  xdg.desktopEntries.zen = {
-    name = "Zen";
-    genericName = "Web Browser";
-    exec = "zen %u";
-    terminal = false;
-    settings.NoDisplay = "true";
-    categories = [
-      "Network"
-      "WebBrowser"
-    ];
-    mimeType = [
-      "image/*"
-      "image/jpeg"
-      "image/png"
-      "image/gif"
-      "image/webp"
-      "text/html"
-      "x-scheme-handler/http"
-      "x-scheme-handler/https"
-      "x-scheme-handler/about"
-      "x-scheme-handler/unknown"
-    ];
+  home.pointerCursor = {
+    gtk.enable = true;
+    x11.enable = true;
+    x11.defaultCursor = "left_ptr";
+    package = pkgs.vimix-cursors;
+    name = "Vimix-cursors";
+    size = 32;
+  };
+  gtk = {
+    enable = true;
+    cursorTheme = {
+      package = pkgs.vimix-cursors;
+      name = "Vimix-cursors";
+      size = 32;
+    };
   };
 
   xdg.mimeApps = {

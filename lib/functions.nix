@@ -57,16 +57,14 @@
       # bash
       set -e
       echo "Starting installation for ${host}..."
-      mkdir -p /tmp/sops-deploy/var/lib/sops-nix
-      cp /var/lib/sops-nix/key.txt /tmp/sops-deploy/var/lib/sops-nix/key.txt
+      cd /tmp
+      root=$(mktemp -d)
+      cp --verbose --parents /var/lib/sops-nix/key.txt ''${root}
       ${pkgs.nixos-anywhere}/bin/nixos-anywhere \
         --copy-host-keys \
         --flake ".#${host}" \
         --build-on-remote \
-        --extra-files /var \
-        --ssh-option StrictHostKeyChecking=no \
-        --ssh-option UserKnownHostsFile=/dev/null \
-        -o StrictHostKeyChecking=no
+        --extra-files $root \
         "$@"
       rm -rf /tmp/sops-deploy
     '';
