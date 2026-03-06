@@ -1,21 +1,12 @@
 {pkgs, ...}: {
-  qt = {
-    enable = true;
-  };
+  preferSingleUser = true;
   xdg.portal = {
     enable = true;
     config = {
-      common = {
-        default = ["gtk"];
-        "org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
-      };
-      hyprland = {
-        default = [
-          "gtk"
-          "hyprland"
-        ];
-        "org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
-      };
+      common.default = ["gtk"];
+      common."org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
+      hyprland.default = ["gtk" "hyprland"];
+      hyprland."org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
     };
     xdgOpenUsePortal = true;
     extraPortals = with pkgs; [

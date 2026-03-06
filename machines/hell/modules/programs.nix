@@ -2,7 +2,7 @@
   legendary = pkgs.symlinkJoin {
     name = "legendary";
     paths = [pkgs.legendary-gl];
-    nativeBuildInputs = [pkgs.makeWrapper]; #
+    nativeBuildInputs = [pkgs.makeWrapper];
     postBuild = ''
       wrapProgram $out/bin/legendary \
         --prefix PATH : ${pkgs.lib.makeBinPath [
@@ -13,21 +13,14 @@
   };
 in {
   environment.systemPackages = [legendary];
-
-  services.scx.enable = true;
-  services.scx.scheduler = "scx_rustland";
-
   programs = {
     nano.enable = false;
-    git.config.url."https://github.com/KebabObama/".insteadOf = ["me:"];
-
     anime-game-launcher.enable = true;
     gpu-screen-recorder.enable = true;
 
     gamemode = {
       enable = true;
       enableRenice = false;
-      settings = {};
     };
 
     hyprland = {

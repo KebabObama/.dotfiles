@@ -1,50 +1,58 @@
 {
   data,
   lib,
-  preferSingleUser,
   pkgs,
+  config,
   ...
 }: {
+  options.preferSingleUser = lib.mkOption {
+    type = lib.types.bool;
+    default = false;
+    description = "Whether the host is intended for a single primary user.";
+  };
+
   environment.systemPackages = with pkgs; [
     (where-is-my-sddm-theme.override {
-      themeConfig = {
-        General = {
-          background = toString ../wallpapers/caelestia.png;
-          backgroundMode = "fill";
-          FontSize = 18;
-        };
-        Colors = {
-          text = "#ffffff";
-          accent = "#cccccc";
-          background = "#000000";
-        };
+      themeConfig.General = {
+        background = "/var/lib/sddm-wallpaper/wallpaper";
+        backgroundMode = "fill";
+        passwordFontSize = 24;
+        hideCursor = false;
+        passwordInputCursorVisible = true;
+        passwordInputWidth = 0.25;
+        passwordCursorColor = "#ffffffff";
+        passwordAllowEmpty = false;
+        showSessionsByDefault = true;
+        showUsersByDefault = true;
+        passwordInputBackground = "#a0000000";
+        passwordInputBorderWidth = 2;
+        passwordInputBorderColor = "#ff000000";
+        passwordInputRadius = 32;
+        wrongPasswordBorderColor = "#ffeb6f92";
+        backgroundFill = "#ff000000";
+        basicTextColor = "#ffffffff";
+        passwordCharacter = "*";
+        blurRadius = 2;
       };
     })
   ];
 
   services.displayManager = {
     sddm = {
-      enable = true;
-      autoNumlock = true;
-      wayland.enable = true;
-      wayland.compositor = "kwin";
-      theme = "where_is_my_sddm_theme";
-      settings = {
-        Users = {
-          RememberLastUser = true;
-        };
-      };
+      enable = lib.mkForce true;
+      autoNumlock = lib.mkDefault true;
+      wayland.enable = lib.mkDefault true;
+      wayland.compositor = lib.mkDefault "kwin";
+      theme = lib.mkDefault "where_is_my_sddm_theme";
     };
 
     autoLogin = {
-      enable = preferSingleUser;
-      user = data.primaryUser;
+      enable = config.preferSingleUser;
+      user = lib.mkDefault data.primaryUser;
     };
   };
 
-  specialisation = lib.mkIf preferSingleUser {
-    multi-user.configuration = {
-      services.displayManager.autoLogin.enable = lib.mkForce false;
-    };
+  specialisation = lib.mkIf config.preferSingleUser {
+    multi-user.configuration.services.displayManager.autoLogin.enable = lib.mkForce false;
   };
 }

@@ -1,7 +1,6 @@
 {inputs, ...}: {
   imports = [
     inputs.caelestia.homeManagerModules.default
-    ./cli.nix
     ./launcher.nix
     ./bar.nix
     ./utilities.nix
@@ -11,8 +10,25 @@
 
   programs.caelestia = {
     enable = true;
+
+    cli = {
+      enable = true;
+      settings.theme = {
+        enableTerm = true;
+        enableHypr = true;
+        enableDiscord = true;
+        enableSpicetify = true;
+        enableFuzzel = true;
+        enableBtop = true;
+        enableGtk = true;
+        enableQt = true;
+      };
+    };
+
     settings = {
       border.thickness = 5;
+      lock.recolourLogo = true;
+      paths.wallpaperDir = "~/.dotfiles/wallpapers";
 
       appearance = {
         mediaGifSpeedAdjustment = 300;
@@ -34,19 +50,6 @@
             blur = false;
           };
         };
-        visualizer = {
-          autoHide = false;
-          enabled = false;
-          blur = false;
-          spacing = 1;
-          rounding = 1;
-        };
-      };
-
-      lock.recolourLogo = true;
-      paths = {
-        wallpaperDir = "~/.dotfiles/wallpapers";
-        mediaGif = null;
       };
 
       dashboard = {
@@ -98,22 +101,10 @@
         enabled = true;
         dragThreshold = 30;
         commands = {
-          logout = [
-            "caelestia-shell"
-            "kill"
-          ];
-          shutdown = [
-            "systemctl"
-            "poweroff"
-          ];
-          hibernate = [
-            "systemctl"
-            "hibernate"
-          ];
-          reboot = [
-            "systemctl"
-            "reboot"
-          ];
+          logout = ["caelestia-shell" "kill"];
+          shutdown = ["systemctl" "poweroff"];
+          hibernate = ["systemctl" "hibernate"];
+          reboot = ["systemctl" "reboot"];
         };
       };
     };
