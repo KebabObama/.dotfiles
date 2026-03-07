@@ -14,6 +14,7 @@
       android-studio
       upscayl
       sqlit-tui
+      tree
     ]);
 
   programs.btop = {

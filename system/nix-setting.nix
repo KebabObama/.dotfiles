@@ -5,6 +5,7 @@
 }: {
   imports = with inputs; [
     nix-gaming.nixosModules.platformOptimizations
+    home-manager.nixosModules.home-manager
     aagl.nixosModules.default
   ];
 

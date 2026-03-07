@@ -13,13 +13,12 @@
     "mail-token"
     "final-boss"
   ];
-
-  users = data.users or [config.primaryUser];
-  mkUser = u: {
-    isNormalUser = true;
-    description = u;
+  users = data.users or [config.users.primaryUser];
+  mkUser = user: {
+    isNormalUser = lib.mkDefault true;
+    description = lib.mkDefault user;
     extraGroups = lib.mkDefault ["docker" "wheel" "audio" "gamemode" "tokens" "networkmanager" "libvirtd" "kvm"];
-    hashedPasswordFile = config.sops.secrets.${u}.path;
+    hashedPasswordFile = config.sops.secrets.${user}.path;
   };
 in {
   imports = [inputs.sops-nix.nixosModules.sops];
@@ -56,7 +55,7 @@ in {
       }))
       (lib.genAttrs tokens (name: {
         key = name;
-        owner = config.primaryUser;
+        owner = config.users.primaryUser;
         group = "tokens";
         mode = "0600";
       }))

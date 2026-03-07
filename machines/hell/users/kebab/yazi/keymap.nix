@@ -78,23 +78,7 @@
         run = "paste";
         desc = "Paste files";
       }
-      {
-        on = ["x"];
-        run = "cut";
-        desc = "Cut selected files";
-      }
-
       # Selection
-      {
-        on = ["v"];
-        run = "visual_mode";
-        desc = "Enter visual mode";
-      }
-      {
-        on = ["V"];
-        run = "toggle";
-        desc = "Toggle current file selection";
-      }
       {
         on = ["ctrl" "a"];
         run = "select_all";

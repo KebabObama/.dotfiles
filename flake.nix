@@ -5,8 +5,12 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    caelestia.url = "github:caelestia-dots/shell/4be8fc9693e439c487f091413289b782d78130e7";
+    caelestia.url = "github:KebabObama/shell";
+    # caelestia.url = "github:caelestia-dots/shell/4be8fc9693e439c487f091413289b782d78130e7";
     # caelestia.inputs.nixpkgs.follows = "nixpkgs";
+
+    wallpapers.url = "github:KebabObama/wallpapers";
+    wallpapers.flake = false;
 
     aagl.url = "github:ezKEa/aagl-gtk-on-nix";
     aagl.inputs.nixpkgs.follows = "nixpkgs";

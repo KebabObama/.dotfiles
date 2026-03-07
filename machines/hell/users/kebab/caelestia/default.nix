@@ -13,22 +13,30 @@
 
     cli = {
       enable = true;
-      settings.theme = {
-        enableTerm = true;
-        enableHypr = true;
-        enableDiscord = true;
-        enableSpicetify = true;
-        enableFuzzel = true;
-        enableBtop = true;
-        enableGtk = true;
-        enableQt = true;
+      settings = {
+        wallpaper.postHook = ''
+          # bash
+          mkdir -p /var/lib/sddm-wallpaper
+          cp -f $WALLPAPER_PATH /var/lib/sddm-wallpaper/wallpaper
+          # swww img $WALLPAPER_PATH --transition-type random --transition-duration 2
+        '';
+        theme = {
+          enableTerm = true;
+          enableHypr = true;
+          enableDiscord = true;
+          enableSpicetify = true;
+          enableFuzzel = true;
+          enableBtop = true;
+          enableGtk = true;
+          enableQt = true;
+        };
       };
     };
 
     settings = {
       border.thickness = 5;
       lock.recolourLogo = true;
-      paths.wallpaperDir = "~/.dotfiles/wallpapers";
+      paths.wallpaperDir = inputs.wallpapers;
 
       appearance = {
         mediaGifSpeedAdjustment = 300;
@@ -40,6 +48,7 @@
 
       background = {
         enabled = true;
+        wallpaperEnabled = true;
         desktopClock = {
           enabled = true;
           position = "bottom-right";

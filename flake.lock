@@ -29,17 +29,16 @@
         "quickshell": "quickshell"
       },
       "locked": {
-        "lastModified": 1771569129,
-        "narHash": "sha256-YPWfRQOt/exrM994a7ijasPtUKBumWFnUU3iTFbghLk=",
-        "owner": "caelestia-dots",
+        "lastModified": 1772834800,
+        "narHash": "sha256-c7+q9EAG7UD8cbhArGCxPPY0AeRkbWLxpBGauhVfvMg=",
+        "owner": "KebabObama",
         "repo": "shell",
-        "rev": "4be8fc9693e439c487f091413289b782d78130e7",
+        "rev": "58ecbb30ef9b09ae9c607afe877cf2a9ae4fec14",
         "type": "github"
       },
       "original": {
-        "owner": "caelestia-dots",
+        "owner": "KebabObama",
         "repo": "shell",
-        "rev": "4be8fc9693e439c487f091413289b782d78130e7",
         "type": "github"
       }
     },
@@ -283,11 +282,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772633327,
-        "narHash": "sha256-jl+DJB2DUx7EbWLRng+6HNWW/1/VQOnf0NsQB4PlA7I=",
+        "lastModified": 1772807318,
+        "narHash": "sha256-Qjw6ILt8cb2HQQpCmWNLMZZ63wEo1KjTQt+1BcQBr7k=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "5a75730e6f21ee624cbf86f4915c6e7489c74acc",
+        "rev": "daa2c221320809f5514edde74d0ad0193ad54ed8",
         "type": "github"
       },
       "original": {
@@ -471,11 +470,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1772715593,
-        "narHash": "sha256-aTnUeZdJK01p/5od8k4cGuRA5AfADAUmka69KSPjeWY=",
+        "lastModified": 1772813093,
+        "narHash": "sha256-dAV9AAV+U/bK/gzx9fdpbF92a6mHG6zauJte7SVYAJo=",
         "owner": "notashelf",
         "repo": "nvf",
-        "rev": "a3123a9ac2ed15ad7b56d2854a9013e3ab9c0af1",
+        "rev": "daf181249ba80f938d1907074c28822962ee4bdb",
         "type": "github"
       },
       "original": {
@@ -519,6 +518,7 @@
         "sops-nix": "sops-nix",
         "virtuaverse-grub": "virtuaverse-grub",
         "viu": "viu",
+        "wallpapers": "wallpapers",
         "zen-browser": "zen-browser"
       }
     },
@@ -639,6 +639,22 @@
       "original": {
         "owner": "KebabObama",
         "repo": "viu",
+        "type": "github"
+      }
+    },
+    "wallpapers": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772828580,
+        "narHash": "sha256-Gb3SnT46FnruqmZ6aM8cECrkxz8RKoHBxdZHY6vgq6Q=",
+        "owner": "KebabObama",
+        "repo": "wallpapers",
+        "rev": "595d0a0c2a5f92c894dd3325195656f80cce2c15",
+        "type": "github"
+      },
+      "original": {
+        "owner": "KebabObama",
+        "repo": "wallpapers",
         "type": "github"
       }
     },

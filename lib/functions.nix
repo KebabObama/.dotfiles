@@ -7,67 +7,105 @@
   ...
 }: lib: rec {
   fill = template: props: let
-    replacements = {
-      "<host>" = props.host or "";
-      "<user>" = props.user or "";
-    };
+    replacements."<host>" = props.host or "";
+    replacements."<user>" = props.user or "";
   in
-    lib.replaceStrings (lib.attrNames replacements) (lib.attrValues replacements) template;
+    lib.replaceStrings
+    (lib.attrNames replacements)
+    (lib.attrValues replacements)
+    template;
 
   getPath = rel: self + "/${rel}";
 
   getDirs = dir:
-    if !(builtins.pathExists dir)
-    then []
-    else lib.attrNames (lib.filterAttrs (_: type: type == "directory") (builtins.readDir dir));
+    if (builtins.pathExists dir)
+    then
+      lib.attrNames
+      (lib.filterAttrs (_: type: type == "directory") (builtins.readDir dir))
+    else [];
 
   scanForModules = dir:
-    if !(builtins.pathExists dir)
-    then []
-    else let
-      contents = builtins.readDir dir;
-    in
-      lib.flatten (lib.mapAttrsToList (
+    assert (builtins.pathExists dir);
+      lib.flatten
+      (lib.mapAttrsToList
+        (
           name: type: let
             path = dir + "/${name}";
           in
-            if type == "regular" && lib.hasSuffix ".nix" name && name != "default.nix"
+            if type == "regular" && lib.hasSuffix ".nix" name
             then [path]
             else if type == "directory" && builtins.pathExists (path + "/default.nix")
             then [(path + "/default.nix")]
             else []
         )
-        contents);
+        (builtins.readDir dir));
 
-  mkHostConfigs = let
-    hostBaseDir = lib.head (lib.splitString "/<host>" hostModulesTemplate);
-    hosts = getDirs (getPath hostBaseDir);
-  in
-    lib.genAttrs hosts (hostname: rec {
-      userParentDir = lib.head (lib.splitString "/<user>" (fill userModulesTemplate {host = hostname;}));
+  mkHostConfigs =
+    lib.genAttrs
+    (getDirs (getPath (lib.head (lib.splitString "/<host>" hostModulesTemplate))))
+    (hostname: rec {
+      userParentDir =
+        lib.head (lib.splitString "/<user>" (fill userModulesTemplate {host = hostname;}));
+
       users = getDirs (getPath userParentDir);
-      primaryUser =
-        if users != []
-        then lib.head users
-        else null;
+
+      firstUser = assert builtins.length users > 0;
+        lib.head users;
     });
 
   mkInstallScript = pkgs: host:
     pkgs.writeShellScriptBin "install-${host}" ''
-      # bash
       set -e
       echo "Starting installation for ${host}..."
       cd /tmp
       root=$(mktemp -d)
-      cp --verbose --parents /var/lib/sops-nix/key.txt ''${root}
+      cp --verbose --parents /var/lib/sops-nix/key.txt "$root"
       ${pkgs.nixos-anywhere}/bin/nixos-anywhere \
         --copy-host-keys \
         --flake ".#${host}" \
         --build-on-remote \
-        --extra-files $root \
+        --extra-files "$root" \
         "$@"
-      rm -rf /tmp/sops-deploy
+      rm -rf "$root"
     '';
+
+  mkRebuild = pkgs: self:
+    pkgs.writeShellApplication {
+      name = "rebuild";
+      runtimeInputs = with pkgs; [
+        nixos-rebuild
+        coreutils
+        hostname
+      ];
+      text = ''
+        mode="switch"
+        host="$(hostname)"
+        if [ $# -ge 1 ]; then
+          case "$1" in
+            switch|boot|test|build|dry-build|dry-activate)
+              mode="$1"
+              shift
+              ;;
+          esac
+        fi
+        if [ $# -ge 1 ]; then
+          host="$1"
+        fi
+        echo "Rebuilding host: $host (mode: $mode)"
+        exec sudo nixos-rebuild "$mode" --flake "${self}#$host"
+      '';
+    };
+
+  mkInstallApps = _: installScripts:
+    lib.mapAttrs'
+    (host: _: {
+      name = "install-${host}";
+      value = {
+        type = "app";
+        program = "${installScripts.${host}}/bin/install-${host}";
+      };
+    })
+    installScripts;
 
   mkScriptPkgs = pkgs: dir:
     lib.pipe (builtins.readDir dir) [

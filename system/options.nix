@@ -9,9 +9,9 @@
     description = "Whether the host is intended for a single primary user.";
   };
 
-  options.primaryUser = lib.mkOption {
+  options.users.primaryUser = lib.mkOption {
     type = lib.types.nullOr lib.types.str;
-    default = data.primaryUser or null;
+    default = data.firstUser or null;
     description = "Primary user for this host. If null, falls back to the first discovered user.";
   };
 }

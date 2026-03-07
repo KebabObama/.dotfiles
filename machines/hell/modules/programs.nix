@@ -12,11 +12,13 @@
     '';
   };
 in {
+  services.displayManager.defaultSession = "hyprland-uwsm";
   environment.systemPackages = [legendary];
   programs = {
     nano.enable = false;
     anime-game-launcher.enable = true;
     gpu-screen-recorder.enable = true;
+    uwsm.enable = true;
 
     gamemode = {
       enable = true;
