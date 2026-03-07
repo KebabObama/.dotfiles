@@ -1,12 +1,21 @@
-{config, ...}: {
-  sops.secrets = {
-    final-boss.sopsFile = ./tokens.yaml;
-  };
-  programs.ssh.matchBlocks = {
+{
+  config,
+  lib,
+  ...
+}: let
+  hosts = {
     "final-boss" = {
-      hostname = "138.68.88.160";
+      hostname = "139.68.88.160";
       user = "root";
-      identityFile = config.sops.secrets.final-boss.path;
     };
   };
+in {
+  programs.ssh.matchBlocks =
+    lib.mapAttrs
+    (name: v: v // {identityFile = lib.mkDefault config.sops.secrets.${name}.path;})
+    hosts;
+
+  sops.secrets = lib.genAttrs (builtins.attrNames hosts) (_: {
+    sopsFile = ./tokens.yaml;
+  });
 }

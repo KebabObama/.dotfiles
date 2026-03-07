@@ -7,6 +7,7 @@
     ];
 
     windowrule = [
+      "match:class ^file-picker$, float true, size 60% 60%, center on"
       "match:class ^jetbrains-studio$, no_dim on, opaque on "
       "match:class ^krita$, maximize on, no_dim on, opaque on"
       "match:class ^mpv$, maximize on, no_dim on, opaque on"

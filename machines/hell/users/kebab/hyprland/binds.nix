@@ -31,20 +31,18 @@
         "Super Shift  , F2 , togglespecialworkspace, communication"
         "Super Shift  , F3 , togglespecialworkspace, music"
 
-        "             , XF86PowerOff , exec       , caelestia-shell ipc call drawers toggle session "
-        "Alt          , F4           , exec       , caelestia-shell ipc call drawers toggle session "
-
-        "             , Print        , exec       , caelestia-shell ipc call picker openFreezeClip  "
-        "Super        , L            , exec       , caelestia-shell ipc call lock lock"
-        "Super Shift  , L            , exec       , caelestia-shell ipc call lock lock"
-
         "Super        , W		         , killactive , "
         "Super Shift  , W		         , killactive , "
 
         "Super	      , Space        , layoutmsg  , swapwithmaster master"
-        "Super        , V            , exec       , toggle-clipboard "
         "Super        , D            , exec       , toggle-minimize "
         "Super        , X            , exec       , toggle-float "
+        "Super        , V            , exec       , caelestia clipboard "
+        "Super        , Print        , exec       , caelestia screenshot --region --freeze"
+        "             , Print        , exec       , caelestia-shell ipc call picker openFreezeClip  "
+        "Alt          , F4           , exec       , caelestia-shell ipc call drawers toggle session "
+        "Super        , L            , exec       , caelestia-shell ipc call lock lock"
+        "Super Shift  , L            , exec       , caelestia-shell ipc call lock lock"
 
         "Super Control, Right        , workspace  , r+1   "
         "Super Control, Left         , workspace  , r-1   "
@@ -54,21 +52,15 @@
 
         "Super	      , Semicolon    , exec 	    , kitty "
         "Super        , Return       , exec 	    , kitty "
-
         "Super Shift  , Semicolon    , exec 	    , kitty "
         "Super Shift  , Return       , exec 	    , kitty "
       ]
-      ++ (builtins.concatLists (
-        builtins.genList (i: [
+      ++ (builtins.concatLists (builtins.genList (i: [
           "Super, code:1${toString i}, workspace, ${toString (i + 1)}"
           "Super Shift, code:1${toString i}, movetoworkspace, ${toString (i + 1)}"
         ])
-        9
-      ));
+        9));
     bindr = ["Super,Super_L,exec,caelestia-shell ipc call drawers toggle launcher"];
-    bindm = [
-      "Super, mouse:272, movewindow"
-      "Super, mouse:273, resizewindow"
-    ];
+    bindm = ["Super, mouse:272, movewindow" "Super, mouse:273, resizewindow"];
   };
 }

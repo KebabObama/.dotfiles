@@ -16,9 +16,6 @@
       DOCKER_CONFIG = "$HOME/.config/docker";
       GNUPGHOME = "$HOME/.local/share/gnupg";
       PULSE_COOKIE = "$HOME/.config/pulse/cookie";
-      XDG_DATA_HOME = "$HOME/.local/share";
-      XDG_CONFIG_HOME = "$HOME/.config";
-      XDG_CACHE_HOME = "$HOME/.cache";
       SQLIT_CONFIG_DIR = "$HOME/.config/sqlit";
       COPILOT_AGENT_HOME = "$HOME/.config/copilot";
       _JAVA_AWT_WM_NONEREPARENTING = "1";
@@ -44,11 +41,6 @@
       QT_WAYLAND_DISABLE_WINDOWDECORATION = 1;
       QT_QPA_PLATFORM = "wayland";
       DISABLE_QT5_COMPAT = "0";
-
-      # --- Desktop Identity ---
-      XDG_SESSION_TYPE = "wayland";
-      XDG_CURRENT_DESKTOP = "Hyprland";
-      XDG_SESSION_DESKTOP = "Hyprland";
     };
   };
 }

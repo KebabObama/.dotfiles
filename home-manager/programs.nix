@@ -36,8 +36,9 @@
     };
 
     ssh = {
-      enable = true;
-      enableDefaultConfig = lib.mkForce false;
+      enable = lib.mkDefault true;
+      enableDefaultConfig = lib.mkDefault false;
+      matchBlocks."*" = lib.mkDefault {};
     };
   };
 }

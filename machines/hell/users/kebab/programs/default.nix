@@ -1,6 +1,7 @@
 {
   pkgs,
   functions,
+  lib,
   ...
 }: {
   home.packages =
@@ -17,6 +18,24 @@
       nix-output-monitor
     ]);
   programs = {
+    vscode = {
+      enable = true;
+      mutableExtensionsDir = true;
+      package = pkgs.vscode.overrideAttrs (oldAttrs: {
+        nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [pkgs.makeWrapper];
+        postFixup =
+          (oldAttrs.postFixup or "")
+          + "wrapProgram $out/bin/code --prefix PATH : ${lib.makeBinPath (with pkgs; [
+            nixd
+            nixfmt
+            tinymist
+            alejandra
+            python3
+            nixdoc
+          ])}";
+      });
+    };
+
     btop = {
       enable = true;
       package = pkgs.btop-cuda;

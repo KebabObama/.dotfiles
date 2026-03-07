@@ -17,7 +17,7 @@ in {
 
       program_options = {
         appindicator = true;
-        file_manager = "kitty yazi";
+        file_manager = "xdg-open";
         menu_items = [
           "browse"
           "mount"

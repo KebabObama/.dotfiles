@@ -9,9 +9,27 @@
 
   programs.zen-browser = {
     enable = true;
-    package = inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default.override {
-      nativeMessagingHosts = [pkgs.firefoxpwa];
+    nativeMessagingHosts = [pkgs.firefoxpwa];
+
+    policies = {
+      AutofillAddressEnabled = true;
+      AutofillCreditCardEnabled = true;
+      DisableAppUpdate = true;
+      DisableFeedbackCommands = true;
+      DisableFirefoxStudies = true;
+      DisablePocket = true;
+      DisableTelemetry = true;
+      DontCheckDefaultBrowser = true;
+      NoDefaultBookmarks = true;
+      OfferToSaveLogins = true;
+      EnableTrackingProtection = {
+        Value = true;
+        Locked = true;
+        Cryptomining = true;
+        Fingerprinting = true;
+      };
     };
+
     profiles.default = {
       isDefault = true;
       userChrome = builtins.readFile ./userChrome.css;
@@ -49,8 +67,9 @@
         "accessibility.typeaheadfind.casesensitive" = 0;
 
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-        "sidebar.expandOnHover" = false;
         "reader.toolbar.vertical" = true;
+
+        "sidebar.expandOnHover" = false;
         "sidebar.backupState" = ''{"command":"","panelOpen":false,"launcherExpanded":false,"launcherVisible":false}'';
         "sidebar.visibility" = "hide-sidebar";
 

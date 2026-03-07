@@ -12,6 +12,7 @@
     '';
   };
 in {
+  preferSingleUser = true;
   services.displayManager.defaultSession = "hyprland-uwsm";
   environment.systemPackages = [legendary];
   programs = {
