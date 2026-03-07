@@ -1,11 +1,16 @@
 {config, ...}: {
-  sops.secrets.github-token = {
-    sopsFile = ./tokens.yaml;
+  sops.secrets = {
+    github-token.sopsFile = ./tokens.yaml;
+    access-token.sopsFile = ./tokens.yaml;
   };
 
   home.sessionVariables = {
     GITHUB_TOKEN = "$(cat ${config.sops.secrets.github-token.path})";
   };
+
+  nix.extraOptions = ''
+    !include ${config.sops.secrets.access-token.path}
+  '';
 
   programs.git = {
     enable = true;
@@ -15,7 +20,6 @@
       url."https://github.com/".insteadOf = "github:";
       user.name = "KebabaObama";
       user.email = "lucaschyba@gmail.com";
-      # credential.helper = "!f() { if [ \"$1\" = \"get\" ]; then echo \"username=x-access-token\"; echo \"password=$(cat ${config.sops.secrets.github-token.path})\"; fi; }; f";
     };
   };
 }
