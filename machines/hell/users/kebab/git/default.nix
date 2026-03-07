@@ -3,7 +3,8 @@
   pkgs,
   ...
 }: let
-  gitHelper = pkgs.writeShellScript "git-sops-helper" ''
+  gitHelper = pkgs.writeShellScript "git-helper" ''
+    # bash
     if [ "$1" = "get" ]; then
       echo "username=x-access-token"
       echo "password=$(cat ${config.sops.secrets.github-token.path})"
