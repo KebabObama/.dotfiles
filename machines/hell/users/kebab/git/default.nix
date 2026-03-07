@@ -6,8 +6,9 @@
     '';
   };
 
-  home.sessionVariables.GITHUB_TOKEN = "$(cat ${config.sops.secrets.github-token.path})";
-  nix.extraOptions = ''!include ${config.sops.templates."nix-github-token.conf".path}'';
+  nix.extraOptions = ''
+    !include ${config.sops.templates."nix-github-token.conf".path}
+  '';
 
   programs.git = {
     enable = true;
@@ -17,6 +18,7 @@
       url."https://github.com/".insteadOf = "github:";
       user.name = "KebabaObama";
       user.email = "lucaschyba@gmail.com";
+      credential.helper = "!f() { if [ \"$1\" = \"get\" ]; then echo \"username=x-access-token\"; echo \"password=$(cat ${config.sops.secrets.github-token.path})\"; fi; }; f";
     };
   };
 }
