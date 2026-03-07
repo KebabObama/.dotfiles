@@ -1,4 +1,15 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: let
+  gitHelper = pkgs.writeShellScript "git-sops-helper" ''
+    if [ "$1" = "get" ]; then
+      echo "username=x-access-token"
+      echo "password=$(cat ${config.sops.secrets.github-token.path})"
+    fi
+  '';
+in {
   sops = {
     secrets.github-token.sopsFile = ./tokens.yaml;
     templates."nix-github-token.conf".content = ''
@@ -18,14 +29,7 @@
       url."https://github.com/".insteadOf = "github:";
       user.name = "KebabaObama";
       user.email = "lucaschyba@gmail.com";
-      credential.helper = ''
-        !f() { \
-          if [ "$1" = "get" ]; then \
-            echo "username=x-access-token"; \
-            echo "password=$(cat ${config.sops.secrets.github-token.path})"; \
-          fi; \
-        }; f "$@"; :
-      '';
+      credential.helper = "${gitHelper}";
     };
   };
 }
