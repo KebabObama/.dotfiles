@@ -1,11 +1,17 @@
 {
   lib,
   inputs,
+  user,
   ...
 }: {
-  imports = [
-    inputs.direnv-new.homeManagerModules.default
+  imports = with inputs; [
+    direnv-new.homeManagerModules.default
+    sops-nix.homeManagerModules.sops
   ];
+
+  sops = {
+    age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
+  };
 
   programs = {
     home-manager.enable = true;
@@ -17,7 +23,6 @@
       new.enable = lib.mkDefault true;
       stdlib = lib.mkBefore ''
         : ''${XDG_CACHE_HOME:=$HOME/.cache}
-
         _get_layout_dir() {
           local hash=$(echo -n "$PWD" | sha256sum | cut -c-7)
           echo "$XDG_CACHE_HOME/direnv/layouts/''${PWD##*/}-$hash"

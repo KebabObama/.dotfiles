@@ -6,15 +6,6 @@
   self,
   ...
 }: let
-  credentialScript = pkgs.writeShellScript "credential-github" ''
-    # bash
-    case "$1" in
-      get)
-        echo "username=x-access-token"
-        echo "password=$(cat ${config.sops.secrets.github-token.path})"
-        ;;
-    esac
-  '';
   internalPackages =
     if config.useInternalPackages
     then (builtins.attrValues self.packages.${pkgs.stdenv.hostPlatform.system})
@@ -39,7 +30,6 @@ in {
       config = {
         core.editor = lib.mkDefault "$EDITOR";
         init.defaultBranch = lib.mkDefault "master";
-        credential."https://github.com".helper = lib.mkDefault credentialScript;
         url."https://github.com/".insteadOf = lib.mkDefault ["github:"];
       };
     };
