@@ -15,6 +15,7 @@ in {
     internalPackages
     ++ [
       inputs.disko.packages.${stdenv.hostPlatform.system}.default
+      git
       wget
       curl
       ntfs3g
@@ -24,17 +25,8 @@ in {
   services.envfs.enable = lib.mkDefault true;
 
   programs = {
-    nano.enable = lib.mkDefault true;
+    nano.enable = lib.mkDefault false;
     nix-ld.enable = lib.mkDefault true;
-
-    git = {
-      enable = lib.mkDefault true;
-      config = {
-        core.editor = lib.mkDefault "$EDITOR";
-        init.defaultBranch = lib.mkDefault "master";
-        url."https://github.com/".insteadOf = lib.mkDefault ["github:"];
-      };
-    };
 
     vim = {
       enable = lib.mkDefault true;
