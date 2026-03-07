@@ -3,6 +3,7 @@
   inputs,
   lib,
   config,
+  self,
   ...
 }: let
   credentialScript = pkgs.writeShellScript "credential-github" ''
@@ -14,13 +15,18 @@
         ;;
     esac
   '';
+  internalPackages =
+    if config.useInternalPackages
+    then (builtins.attrValues self.packages.${pkgs.stdenv.hostPlatform.system})
+    else [];
 in {
-  environment.systemPackages = with pkgs; [
-    inputs.disko.packages.${stdenv.hostPlatform.system}.default
-    wget
-    curl
-    sops
-  ];
+  environment.systemPackages = with pkgs;
+    internalPackages
+    ++ [
+      inputs.disko.packages.${stdenv.hostPlatform.system}.default
+      wget
+      curl
+    ];
 
   services.envfs.enable = lib.mkDefault true;
 
@@ -42,6 +48,13 @@ in {
       enable = lib.mkDefault true;
       defaultEditor = lib.mkDefault true;
       package = lib.mkDefault pkgs.vim-full;
+    };
+
+    nh = {
+      enable = lib.mkDefault (!config.useInternalPackages);
+      flake = "$HOME/.dotfiles";
+      clean.enable = lib.mkDefault true;
+      clean.extraArgs = lib.mkDefault "--keep 5 --keep-since 5d";
     };
   };
 }

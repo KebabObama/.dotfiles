@@ -3,15 +3,29 @@
   data ? {},
   ...
 }: {
-  options.preferSingleUser = lib.mkOption {
-    type = lib.types.bool;
-    default = false;
-    description = "Whether the host is intended for a single primary user.";
-  };
+  options = {
+    preferSingleUser = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Whether the host is intended for a single primary user.";
+    };
 
-  options.users.primaryUser = lib.mkOption {
-    type = lib.types.nullOr lib.types.str;
-    default = data.firstUser or null;
-    description = "Primary user for this host. If null, falls back to the first discovered user.";
+    useInternalPackages = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Whether to use internal packages for this host.";
+    };
+
+    boot.secure = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Sets if host is supposed to use lazaboonte for secure boot. If true, keys will be automatically generated and enrolled.";
+    };
+
+    users.primaryUser = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = data.firstUser or null;
+      description = "Primary user for this host. If null, falls back to the first discovered user.";
+    };
   };
 }

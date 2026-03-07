@@ -22,15 +22,31 @@
   };
 in {
   imports = [inputs.sops-nix.nixosModules.sops];
+
   system.stateVersion = stateVersion;
+  system.activationScripts.sopsAgeKey = {
+    deps = ["users"];
+    text = ''
+      # bash
+      keyFile=/var/lib/sops-nix/key.txt
+      if [ ! -f "$keyFile" ]; then
+        install -d -m 700 /var/lib/sops-nix
+        ${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key > "$keyFile"
+        chmod 600 "$keyFile"
+      fi
+    '';
+  };
+
   nixpkgs.config.allowUnfree = lib.mkDefault true;
   services.udisks2.enable = lib.mkDefault true;
   security.polkit.enable = lib.mkDefault true;
+
   environment = {
-    systemPackages = with pkgs; [ntfs3g];
+    systemPackages = with pkgs; [ntfs3g sops];
     sessionVariables.SOPS_AGE_KEY_FILE = "/var/lib/sops-nix/key.txt";
     sessionVariables.SOPS_AGE_SSH_PRIVATE_KEY_FILE = "/etc/ssh/ssh_host_ed25519_key";
   };
+
   users = {
     groups.tokens.name = "tokens";
     mutableUsers = lib.mkDefault false;
@@ -42,7 +58,7 @@ in {
     defaultSopsFile = lib.mkDefault ./secrets.yaml;
 
     age = {
-      keyFile = lib.mkDefault "/var/lib/sops-nix/key.txt";
+      keyFile = null;
       sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
       generateKey = false;
     };
@@ -50,7 +66,6 @@ in {
     secrets = lib.mkMerge [
       (lib.genAttrs users (name: {
         key = name;
-        sopsFile = ./secrets.yaml;
         neededForUsers = true;
       }))
       (lib.genAttrs tokens (name: {

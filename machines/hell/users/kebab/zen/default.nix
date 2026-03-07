@@ -12,7 +12,6 @@
     package = inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default.override {
       nativeMessagingHosts = [pkgs.firefoxpwa];
     };
-    suppressXdgMigrationWarning = true;
     profiles.default = {
       isDefault = true;
       userChrome = builtins.readFile ./userChrome.css;

@@ -1,17 +1,12 @@
-{
-  inputs ? {},
-  nixpkgs ? import <nixpkgs> {},
-  lib ? nixpkgs.lib,
-  ...
-}: {
+{inputs ? {}, ...}: {
   imports = [(inputs.disko.nixosModules.disko or null)];
 
-  disko.devices.disk = lib.mkDefault {
+  disko.devices.disk = {
     main = {
-      device = lib.mkDefault "/dev/nvme0n1";
+      device = "/dev/nvme0n1";
       type = "disk";
       content = {
-        type = lib.mkDefault "gpt";
+        type = "gpt";
         partitions = {
           ESP = {
             size = "512M";

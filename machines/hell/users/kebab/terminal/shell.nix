@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [blesh];
   programs = {
-    nix-index-database.comma.enable = true;
     zoxide = {
       enable = true;
       enableBashIntegration = false;

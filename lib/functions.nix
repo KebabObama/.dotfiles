@@ -57,40 +57,38 @@
     pkgs.writeShellScriptBin "install-${host}" ''
       set -e
       echo "Starting installation for ${host}..."
-      cd /tmp
-      root=$(mktemp -d)
-      cp --verbose --parents /var/lib/sops-nix/key.txt "$root"
       ${pkgs.nixos-anywhere}/bin/nixos-anywhere \
         --copy-host-keys \
         --flake ".#${host}" \
         --build-on-remote \
-        --extra-files "$root" \
         "$@"
-      rm -rf "$root"
     '';
 
-  mkRebuild = pkgs: self:
+  mkRebuild = pkgs:
     pkgs.writeShellApplication {
       name = "rebuild";
+      meta.description = "Rebuild hosts.";
       runtimeInputs = with pkgs; [
         nixos-rebuild
         coreutils
         hostname
       ];
       text = ''
-        mode="switch"
-        host="$(hostname)"
+        # bash
+        MODE="switch"
+        HOST="$(hostname)"
         if [ $# -ge 1 ]; then
           case "$1" in
             switch|boot|test|build|dry-build|dry-activate)
-              mode="$1"; shift;;
+              MODE="$1"; shift;;
           esac
         fi
-        if [ $# -ge 1 ]; then
-          host="$1"
+        if [ $# -gt 0 ] && [[ ! "$1" =~ ^- ]]; then
+          HOST="$1"
+          shift
         fi
-        echo "Rebuilding host: $host (mode: $mode)"
-        exec sudo nixos-rebuild "$mode" --flake "${self}#$host" "$@"
+        echo "Rebuilding host: $HOST (mode: $MODE)"
+        exec sudo nixos-rebuild "$MODE" --flake "$HOME/.dotfiles#$HOST" "$@"
       '';
     };
 

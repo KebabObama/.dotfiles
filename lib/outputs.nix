@@ -9,6 +9,15 @@
   hostConfigs = functions.mkHostConfigs;
   pkgs = nixpkgs.legacyPackages.${definitions.system};
   installScripts = lib.mapAttrs (host: _: functions.mkInstallScript pkgs host) hostConfigs;
+  home-manager = host: data: {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = definitions // {inherit functions host data;};
+    users = lib.genAttrs data.users (user: {
+      imports = functions.getHomeModules host user;
+      _module.args = {inherit user host data functions;};
+    });
+  };
 in {
   #################################
   # NixOS Configurations
@@ -20,23 +29,7 @@ in {
       lib.nixosSystem {
         inherit (definitions) system;
         specialArgs = definitions // {inherit functions host data;};
-        modules =
-          functions.getNixosModules host
-          ++ [
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                extraSpecialArgs = definitions // {inherit functions host data;};
-                users = lib.genAttrs data.users (
-                  user: {
-                    imports = functions.getHomeModules host user;
-                    _module.args = {inherit user host data functions;};
-                  }
-                );
-              };
-            }
-          ];
+        modules = functions.getNixosModules host ++ [{home-manager = home-manager host data;}];
       })
     hostConfigs;
 
@@ -45,12 +38,13 @@ in {
   #################################
 
   apps.${definitions.system} =
-    (functions.mkInstallApps definitions.system installScripts)
-    // {
-      default = {
-        type = "app";
-        meta.description = "Rebuild hosts.";
-        program = "${(functions.mkRebuild pkgs self)}/bin/rebuild";
-      };
-    };
+    functions.mkInstallApps definitions.system installScripts;
+
+  #################################
+  # Rebuild script
+  #################################
+
+  packages.${definitions.system} = {
+    default = functions.mkRebuild pkgs;
+  };
 }

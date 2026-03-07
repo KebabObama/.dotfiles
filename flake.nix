@@ -9,14 +9,14 @@
     # caelestia.url = "github:caelestia-dots/shell";
     # caelestia.inputs.nixpkgs.follows = "nixpkgs";
 
+    lanzaboote.url = "github:nix-community/lanzaboote/v1.0.0";
+    lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
+
     wallpapers.url = "github:KebabObama/wallpapers";
     wallpapers.flake = false;
 
     aagl.url = "github:ezKEa/aagl-gtk-on-nix";
     aagl.inputs.nixpkgs.follows = "nixpkgs";
-
-    nix-index-database.url = "github:nix-community/nix-index-database";
-    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
     direnv-new.url = "github:KebabObama/direnv-new";
     direnv-new.inputs.nixpkgs.follows = "nixpkgs";

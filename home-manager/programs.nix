@@ -5,7 +5,6 @@
 }: {
   imports = [
     inputs.direnv-new.homeManagerModules.default
-    inputs.nix-index-database.homeModules.default
   ];
 
   programs = {
