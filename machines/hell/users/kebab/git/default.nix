@@ -1,16 +1,13 @@
 {config, ...}: {
-  sops.secrets = {
-    github-token.sopsFile = ./tokens.yaml;
-    access-token.sopsFile = ./tokens.yaml;
+  sops = {
+    secrets.github-token.sopsFile = ./tokens.yaml;
+    templates."nix-github-token.conf".content = ''
+      access-tokens = github.com=${config.sops.placeholder.github-token}
+    '';
   };
 
-  home.sessionVariables = {
-    GITHUB_TOKEN = "$(cat ${config.sops.secrets.github-token.path})";
-  };
-
-  nix.extraOptions = ''
-    !include ${config.sops.secrets.access-token.path}
-  '';
+  home.sessionVariables.GITHUB_TOKEN = "$(cat ${config.sops.secrets.github-token.path})";
+  nix.extraOptions = ''!include ${config.sops.templates."nix-github-token.conf".path}'';
 
   programs.git = {
     enable = true;
