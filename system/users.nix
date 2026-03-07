@@ -21,24 +21,18 @@ in {
   system.activationScripts.sopsAgeKey = {
     deps = ["users" "groups"];
     text = ''
-      # Path to the system-wide key generated from SSH
       globalKeyFile=/var/lib/sops-nix/key.txt
-
-      # 1. Ensure the global key exists
       if [ ! -f "$globalKeyFile" ]; then
         mkdir -p /var/lib/sops-nix
         chmod 700 /var/lib/sops-nix
         ${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key > "$globalKeyFile"
         chmod 600 "$globalKeyFile"
       fi
-
-      # 2. Iteratively deploy to user config directories
       ${lib.concatMapStringsSep "\n" (user: let
           userHome = config.users.users.${user}.home;
           userGroup = config.users.users.${user}.group;
         in ''
           userConfigDir="${userHome}/.config/sops/age"
-
           if [ -d "${userHome}" ]; then
             mkdir -p "$userConfigDir"
             cp "$globalKeyFile" "$userConfigDir/keys.txt"
@@ -56,12 +50,6 @@ in {
   nixpkgs.config.allowUnfree = lib.mkDefault true;
   services.udisks2.enable = lib.mkDefault true;
   security.polkit.enable = lib.mkDefault true;
-
-  environment = {
-    systemPackages = with pkgs; [ntfs3g sops];
-    sessionVariables.SOPS_AGE_KEY_FILE = "/var/lib/sops-nix/key.txt";
-    sessionVariables.SOPS_AGE_SSH_PRIVATE_KEY_FILE = "/etc/ssh/ssh_host_ed25519_key";
-  };
 
   users = {
     groups.tokens.name = "tokens";

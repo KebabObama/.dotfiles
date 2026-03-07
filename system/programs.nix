@@ -17,6 +17,8 @@ in {
       inputs.disko.packages.${stdenv.hostPlatform.system}.default
       wget
       curl
+      ntfs3g
+      sops
     ];
 
   services.envfs.enable = lib.mkDefault true;
