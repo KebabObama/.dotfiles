@@ -7,10 +7,6 @@
   pkgs,
   ...
 }: let
-  tokens = [
-    "mail-token"
-    "final-boss"
-  ];
   users = data.users or [config.users.primaryUser];
   mkUser = user: {
     isNormalUser = lib.mkDefault true;
@@ -83,17 +79,9 @@ in {
       generateKey = false;
     };
 
-    secrets = lib.mkMerge [
-      (lib.genAttrs users (name: {
-        key = name;
-        neededForUsers = true;
-      }))
-      (lib.genAttrs tokens (name: {
-        key = name;
-        owner = config.users.primaryUser;
-        group = "tokens";
-        mode = "0600";
-      }))
-    ];
+    secrets = lib.genAttrs users (name: {
+      key = name;
+      neededForUsers = true;
+    });
   };
 }

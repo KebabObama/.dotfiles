@@ -38,18 +38,6 @@
     ssh = {
       enable = true;
       enableDefaultConfig = lib.mkForce false;
-      matchBlocks = {
-        "self" = {
-          hostname = "127.0.0.1";
-          user = "kebab";
-          identityFile = "~/.ssh/id_ed25519";
-        };
-        "final-boss" = lib.mkDefault {
-          hostname = "138.68.88.160";
-          user = "root";
-          identityFile = "/run/secrets/final-boss";
-        };
-      };
     };
   };
 }

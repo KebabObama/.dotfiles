@@ -9,10 +9,18 @@
 
   programs.git = {
     enable = true;
-    userName = "KebabaObama";
-    userEmail = "lucaschyba@gmail.com";
     settings = {
-      credential.helper = "!f() { echo \"password=$(cat ${config.sops.secrets.github-token.path})\"; }; f";
+      user.name = "KebabaObama";
+      user.email = "lucaschyba@gmail.com";
+      credential.helper = ''
+        # bash
+        case "$1" in
+          get)
+            echo "username=x-access-token"
+            echo "password=$(cat ${config.sops.secrets.github-token.path})"
+            ;;
+        esac
+      '';
     };
   };
 }

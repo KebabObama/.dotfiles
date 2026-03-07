@@ -2,7 +2,6 @@
   host,
   pkgs,
   lib,
-  config,
   ...
 }: {
   services = {
@@ -18,7 +17,6 @@
     openssh = {
       enable = lib.mkDefault false;
       settings.PrintMotd = lib.mkDefault false;
-      authorizedKeysFiles = lib.mkBefore [config.sops.secrets.hell-rsa-pub.path];
       hostKeys = [];
     };
 

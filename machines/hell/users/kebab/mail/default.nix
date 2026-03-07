@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   programs.aerc = {
     enable = true;
     extraConfig = {
@@ -14,6 +18,7 @@
       };
     };
   };
+  sops.secrets.mail-token.sopsFile = ./tokens.yaml;
   services.imapnotify.enable = true;
   accounts.email.accounts = {
     personal = {
@@ -21,7 +26,7 @@
       address = "lucaschyba@gmail.com";
       userName = "lucaschyba@gmail.com";
       realName = "Lukáš Pražák";
-      passwordCommand = "${pkgs.coreutils}/bin/cat /run/secrets/mail-token";
+      passwordCommand = "${pkgs.coreutils}/bin/cat ${config.sops.secrets.mail-token.path}";
       aerc.enable = true;
 
       smtp = {
