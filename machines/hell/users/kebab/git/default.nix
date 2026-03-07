@@ -24,7 +24,7 @@
             echo "username=x-access-token"; \
             echo "password=$(cat ${config.sops.secrets.github-token.path})"; \
           fi; \
-        }; f
+        }; f "$@"; :
       '';
     };
   };
