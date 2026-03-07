@@ -49,6 +49,7 @@ in {
     // {
       default = {
         type = "app";
+        meta.description = "Rebuild hosts.";
         program = "${(functions.mkRebuild pkgs self)}/bin/rebuild";
       };
     };

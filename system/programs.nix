@@ -43,12 +43,5 @@ in {
       defaultEditor = lib.mkDefault true;
       package = lib.mkDefault pkgs.vim-full;
     };
-
-    # nh = {
-    #   enable = lib.mkDefault true;
-    #   flake = "$HOME/.dotfiles";
-    #   clean.enable = lib.mkDefault false;
-    #   clean.extraArgs = lib.mkDefault "--keep 5 --keep-since 5d";
-    # };
   };
 }

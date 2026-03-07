@@ -83,16 +83,14 @@
         if [ $# -ge 1 ]; then
           case "$1" in
             switch|boot|test|build|dry-build|dry-activate)
-              mode="$1"
-              shift
-              ;;
+              mode="$1"; shift;;
           esac
         fi
         if [ $# -ge 1 ]; then
           host="$1"
         fi
         echo "Rebuilding host: $host (mode: $mode)"
-        exec sudo nixos-rebuild "$mode" --flake "${self}#$host"
+        exec sudo nixos-rebuild "$mode" --flake "${self}#$host" "$@"
       '';
     };
 
@@ -102,6 +100,7 @@
       name = "install-${host}";
       value = {
         type = "app";
+        meta.description = "Run the installation script for ${host}.";
         program = "${installScripts.${host}}/bin/install-${host}";
       };
     })
