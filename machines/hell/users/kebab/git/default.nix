@@ -1,13 +1,15 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{config, ...}: {
   sops = {
     secrets.github-token.sopsFile = ./tokens.yaml;
-    templates."nix-github-token.conf".content = ''
-      access-tokens = github.com=${config.sops.placeholder.github-token}
-    '';
+    templates = {
+      "nix-github-token.conf".content = ''
+        access-tokens = github.com=${config.sops.placeholder.github-token}
+      '';
+      "git-github-token.conf".content = ''
+        username=x-access-token
+        password=${config.sops.placeholder.github-token}
+      '';
+    };
   };
 
   nix.extraOptions = ''
@@ -22,13 +24,7 @@
       url."https://github.com/".insteadOf = "github:";
       user.name = "KebabaObama";
       user.email = "lucaschyba@gmail.com";
-      credential.helper = toString (pkgs.writeShellScript "git-helper" ''
-        # bash
-        if [ "$1" = "get" ]; then
-          echo "username=x-access-token"
-          echo "password=$(cat ${config.sops.secrets.github-token.path})"
-        fi
-      '');
+      credential.helper = ''!cat ${config.sops.templates."git-github-token.conf".path}'';
     };
   };
 }

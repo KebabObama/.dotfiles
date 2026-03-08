@@ -40,11 +40,11 @@
       "ctrl+7" = "goto_tab 7";
       "ctrl+8" = "goto_tab 8";
       "ctrl+9" = "goto_tab 9";
-      "ctrl+shift+enter" = "new_window";
-      "ctrl+shift+w" = "close_window";
-      "ctrl+shift+]" = "next_window";
-      "ctrl+shift+[" = "previous_window";
-      "ctrl+shift+r" = "reload_config";
+      "ctrl+shift+enter" = "";
+      "ctrl+shift+w" = "";
+      "ctrl+shift+]" = "";
+      "ctrl+shift+[" = "";
+      "ctrl+shift+r" = "";
       "ctrl+=" = "increase_font_size";
       "ctrl+-" = "decrease_font_size";
       "ctrl+0" = "restore_font_size";
