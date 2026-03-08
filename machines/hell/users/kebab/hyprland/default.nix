@@ -11,18 +11,19 @@
   home.packages = with pkgs; [
     cliphist
     wl-clipboard
-    fuzzel
-    jq
   ];
 
   wayland.windowManager.hyprland = {
     enable = true;
     package = null;
     plugins = [];
-    systemd.enable = true;
-    systemd.variables = ["--all"];
-    systemd.enableXdgAutostart = true;
     extraConfig = "monitor=,preferred,auto,1";
     settings.xwayland.force_zero_scaling = true;
+    xwayland.enable = true;
+    systemd = {
+      enable = true;
+      variables = ["--all"];
+      enableXdgAutostart = true;
+    };
   };
 }

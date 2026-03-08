@@ -9,9 +9,7 @@
     sops-nix.homeManagerModules.sops
   ];
 
-  sops = {
-    age.keyFile = "/home/${user}/.config/sops-nix/age/keys.txt";
-  };
+  sops.age.keyFile = "/home/${user}/.config/sops-nix/age/keys.txt";
 
   programs = {
     home-manager.enable = true;

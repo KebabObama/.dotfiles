@@ -17,6 +17,7 @@
       sqlit-tui
       nix-output-monitor
     ]);
+
   programs = {
     vscode = {
       enable = true;

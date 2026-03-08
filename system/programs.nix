@@ -1,8 +1,8 @@
 {
   pkgs,
-  inputs,
   lib,
   config,
+  inputs,
   self,
   ...
 }: let
@@ -11,16 +11,16 @@
     then (builtins.attrValues self.packages.${pkgs.stdenv.hostPlatform.system})
     else [];
 in {
-  environment.systemPackages = with pkgs;
+  environment.systemPackages =
     internalPackages
-    ++ [
-      inputs.disko.packages.${stdenv.hostPlatform.system}.default
+    ++ [inputs.disko.packages.${pkgs.stdenv.hostPlatform.system}.default]
+    ++ (with pkgs; [
       git
       wget
       curl
       ntfs3g
       sops
-    ];
+    ]);
 
   services.envfs.enable = lib.mkDefault true;
 

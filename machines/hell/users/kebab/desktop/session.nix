@@ -19,12 +19,10 @@
       SQLIT_CONFIG_DIR = "$HOME/.config/sqlit";
       COPILOT_AGENT_HOME = "$HOME/.config/copilot";
       _JAVA_AWT_WM_NONEREPARENTING = "1";
-      SSH_AUTH_SOCK = "/run/user/1000/keyring/ssh";
       GRIMBLAST_HIDE_CURSOR = "0";
       QS_ICON_THEME = "hicolor";
       QT_QPA_PLATFORMTHEME = "qt5ct";
       NIXPKGS_ALLOW_UNFREE = 1;
-      GTK_USE_PORTAL = 1;
 
       # --- XWayland ---
       GDK_BACKEND = "wayland,x11";

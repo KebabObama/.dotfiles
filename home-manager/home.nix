@@ -2,6 +2,7 @@
   user,
   stateVersion,
   lib,
+  pkgs,
   ...
 }: {
   manual.html.enable = lib.mkDefault true;
@@ -11,5 +12,8 @@
     username = user;
     homeDirectory = "/home/${user}";
     preferXdgDirectories = lib.mkDefault true;
+    packages = with pkgs; [
+      jq
+    ];
   };
 }

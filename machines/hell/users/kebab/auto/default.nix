@@ -10,10 +10,7 @@ in {
     tray = "always";
     automount = true;
     settings = {
-      notifications = {
-        device_added = false;
-      };
-
+      notifications.device_added = false;
       program_options = {
         appindicator = true;
         file_manager = "xdg-open";
