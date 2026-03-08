@@ -39,11 +39,11 @@ in {
           userConfigDir="${userHome}/.config/sops/age"
           if [ -d "${userHome}" ]; then
             mkdir -p "$userConfigDir"
+            mkdir -p /home/jitka/.config/dconf
             cp "$globalKeyFile" "$userConfigDir/keys.txt"
-            chown -R ${user}:${userGroup} "${userHome}/.config/sops"
-            chmod 700 "${userHome}/.config/sops"
-            chmod 700 "$userConfigDir"
-            chmod 600 "$userConfigDir/keys.txt"
+            chown -R ${user}:${userGroup} "${userHome}/.config/"
+            chmod -R 700 "${userHome}/.config/"
+            chmod -R 600 "$userConfigDir/keys.txt"
           fi
         '')
         users}
