@@ -23,6 +23,8 @@ in {
     ]);
 
   services.envfs.enable = lib.mkDefault true;
+  security.polkit.enable = lib.mkDefault true;
+  security.rtkit.enable = lib.mkDefault true;
 
   programs = {
     nano.enable = lib.mkDefault false;

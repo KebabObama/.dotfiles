@@ -4,7 +4,6 @@
   config,
   ...
 }: {
-  security.rtkit.enable = true;
   systemd.tmpfiles.rules = [
     "d /var/lib/sddm-wallpaper 0755 ${config.users.primaryUser} users -"
   ];

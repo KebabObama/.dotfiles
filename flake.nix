@@ -4,10 +4,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    caelestia-nixpkgs.url = "github:nixos/nixpkgs/a82ccc39b39b621151d6732718e3e250109076fa";
 
-    caelestia.url = "github:KebabObama/shell";
-    # caelestia.url = "github:caelestia-dots/shell";
-    # caelestia.inputs.nixpkgs.follows = "nixpkgs";
+    caelestia.url = "github:caelestia-dots/shell";
+    caelestia.inputs.nixpkgs.follows = "caelestia-nixpkgs";
 
     lanzaboote.url = "github:nix-community/lanzaboote/v1.0.0";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";

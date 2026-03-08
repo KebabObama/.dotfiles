@@ -5,9 +5,13 @@
   lib,
   config,
   pkgs,
+  self,
+  host,
+  hostModulesTemplate,
   ...
 }: let
   users = data.users or [config.users.primaryUser];
+  hostTemplate = toString (lib.head (lib.splitString "/<host>" hostModulesTemplate));
   mkUser = user: {
     isNormalUser = lib.mkDefault true;
     description = lib.mkDefault user;
@@ -32,12 +36,12 @@ in {
           userHome = config.users.users.${user}.home;
           userGroup = config.users.users.${user}.group;
         in ''
-          userConfigDir="${userHome}/.config/sops-nix/age"
+          userConfigDir="${userHome}/.config/sops/age"
           if [ -d "${userHome}" ]; then
             mkdir -p "$userConfigDir"
             cp "$globalKeyFile" "$userConfigDir/keys.txt"
-            chown -R ${user}:${userGroup} "${userHome}/.config/sops-nix"
-            chmod 700 "${userHome}/.config/sops-nix"
+            chown -R ${user}:${userGroup} "${userHome}/.config/sops"
+            chmod 700 "${userHome}/.config/sops"
             chmod 700 "$userConfigDir"
             chmod 600 "$userConfigDir/keys.txt"
           fi
@@ -48,7 +52,6 @@ in {
 
   nixpkgs.config.allowUnfree = lib.mkDefault true;
   services.udisks2.enable = lib.mkDefault true;
-  security.polkit.enable = lib.mkDefault true;
 
   users = {
     groups.tokens.name = "tokens";
@@ -58,8 +61,7 @@ in {
   };
 
   sops = {
-    defaultSopsFile = lib.mkDefault ./secrets.yaml;
-
+    defaultSopsFile = lib.mkDefault "${self.outPath}/${hostTemplate}/${host}/secrets.yaml";
     age = {
       keyFile = null;
       sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];

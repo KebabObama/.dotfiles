@@ -13,14 +13,6 @@
     }
   ];
 
-  opener.mime = [
-    {
-      run = "xdg-open %s";
-      desc = "Open using xdg-open";
-    }
-  ];
-
-  open.append_rules = [];
   open.prepand_rules = [
     {
       mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}";
@@ -28,7 +20,6 @@
     }
   ];
 
-  # Manager settings (main file list)
   mgr = {
     show_hidden = true;
     show_symlink = true;
@@ -40,9 +31,8 @@
     scrolloff = 5;
   };
 
-  # Layout configuration (superfile-like)
   manager = {
-    ratio = [1 3 4]; # Sidebar ratio: parent, current, preview
+    ratio = [2 3 3];
     sort_by = "natural";
     sort_sensitive = true;
     sort_dir_first = true;
@@ -52,7 +42,6 @@
     show_symlink = true;
   };
 
-  # Preview settings
   preview = {
     tab_size = 2;
     max_width = 1000;
@@ -65,34 +54,22 @@
     ueberzug_offset = [0 0 0 0];
   };
 
-  # Status bar (footer with metadata)
   status = {
     separator_open = "";
     separator_close = "";
-    separator_style = {
-      fg = "darkgray";
-      bg = "darkgray";
-    };
+    separator_style.fg = "darkgray";
+    separator_style.bg = "darkgray";
   };
 
-  # Which-key menu settings
   which = {
     sort_by = "key";
     sort_sensitive = false;
     sort_reverse = false;
   };
 
-  # Input settings
-  input = {
-    cursor_blink = true;
-  };
+  input.cursor_blink = true;
+  headsup.enabled = true;
 
-  # Headsup display settings
-  headsup = {
-    enabled = true;
-  };
-
-  # Tasks display
   tasks = {
     micro_workers = 5;
     macro_workers = 10;

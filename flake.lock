@@ -25,19 +25,21 @@
     "caelestia": {
       "inputs": {
         "caelestia-cli": "caelestia-cli",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": [
+          "caelestia-nixpkgs"
+        ],
         "quickshell": "quickshell"
       },
       "locked": {
-        "lastModified": 1772834800,
-        "narHash": "sha256-c7+q9EAG7UD8cbhArGCxPPY0AeRkbWLxpBGauhVfvMg=",
-        "owner": "KebabObama",
+        "lastModified": 1772962569,
+        "narHash": "sha256-ctRw4pVgx0IYKfA2hy90Ku37pnVX2T4q57UWp+l69fs=",
+        "owner": "caelestia-dots",
         "repo": "shell",
-        "rev": "58ecbb30ef9b09ae9c607afe877cf2a9ae4fec14",
+        "rev": "e183599ce9e2c8d30a14631d53eb9947220c0812",
         "type": "github"
       },
       "original": {
-        "owner": "KebabObama",
+        "owner": "caelestia-dots",
         "repo": "shell",
         "type": "github"
       }
@@ -53,16 +55,32 @@
         ]
       },
       "locked": {
-        "lastModified": 1771075454,
-        "narHash": "sha256-5GlUpibCTqcXq/kCwkLHQGfjuBk2r+ZlWY0MjZo0xtE=",
+        "lastModified": 1772764582,
+        "narHash": "sha256-hSwjmpXHFqzSXrndVekA0IheKrbC7wi0IbfZTYwlmXw=",
         "owner": "caelestia-dots",
         "repo": "cli",
-        "rev": "d890f7c3af4e7a900338bdf6400c2cf76de89a19",
+        "rev": "4bcd42f482d038b98145b0b03388244b68b7d35d",
         "type": "github"
       },
       "original": {
         "owner": "caelestia-dots",
         "repo": "cli",
+        "type": "github"
+      }
+    },
+    "caelestia-nixpkgs": {
+      "locked": {
+        "lastModified": 1771008912,
+        "narHash": "sha256-gf2AmWVTs8lEq7z/3ZAsgnZDhWIckkb+ZnAo5RzSxJg=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "a82ccc39b39b621151d6732718e3e250109076fa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "a82ccc39b39b621151d6732718e3e250109076fa",
         "type": "github"
       }
     },
@@ -485,22 +503,6 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1771008912,
-        "narHash": "sha256-gf2AmWVTs8lEq7z/3ZAsgnZDhWIckkb+ZnAo5RzSxJg=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "a82ccc39b39b621151d6732718e3e250109076fa",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
         "lastModified": 1772773019,
         "narHash": "sha256-E1bxHxNKfDoQUuvriG71+f+s/NT0qWkImXsYZNFFfCs=",
         "owner": "nixos",
@@ -571,11 +573,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770693276,
-        "narHash": "sha256-ngXnN5YXu+f45+QGYNN/VEBMQmcBCYGRCqwaK8cxY1s=",
+        "lastModified": 1772925576,
+        "narHash": "sha256-mMoiXABDtkSJxCYDrkhJ/TrrJf5M46oUfIlJvv2gkZ0=",
         "ref": "refs/heads/master",
-        "rev": "dacfa9de829ac7cb173825f593236bf2c21f637e",
-        "revCount": 735,
+        "rev": "15a84097653593dd15fad59a56befc2b7bdc270d",
+        "revCount": 750,
         "type": "git",
         "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
       },
@@ -588,12 +590,13 @@
       "inputs": {
         "aagl": "aagl",
         "caelestia": "caelestia",
+        "caelestia-nixpkgs": "caelestia-nixpkgs",
         "direnv-new": "direnv-new",
         "disko": "disko",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "nix-gaming": "nix-gaming",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_2",
         "nvf": "nvf",
         "sops-nix": "sops-nix",
         "virtuaverse-grub": "virtuaverse-grub",
@@ -746,11 +749,11 @@
     "wallpapers": {
       "flake": false,
       "locked": {
-        "lastModified": 1772881697,
-        "narHash": "sha256-Jc4k8I8Emk8XudufxkcbZzLGKe63T40ufV7qTNdNe0I=",
+        "lastModified": 1772982574,
+        "narHash": "sha256-r+doIzu0RzFUWCjMkHd22GBYXSy6dYvFXx9jNi1RU9k=",
         "owner": "KebabObama",
         "repo": "wallpapers",
-        "rev": "4154208d14669148a96d1aff3d3c72635e951d70",
+        "rev": "9144e519038273588d6522421917dceafec3ff37",
         "type": "github"
       },
       "original": {

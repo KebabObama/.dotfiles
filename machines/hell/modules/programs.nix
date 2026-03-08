@@ -1,5 +1,9 @@
 {pkgs, ...}: {
   preferSingleUser = true;
+
+  services.scx.enable = true;
+  services.scx.scheduler = "scx_rustland";
+
   programs = {
     nano.enable = false;
     anime-game-launcher.enable = true;
@@ -7,7 +11,7 @@
 
     gamemode = {
       enable = true;
-      enableRenice = false;
+      enableRenice = true;
     };
 
     hyprland = {
