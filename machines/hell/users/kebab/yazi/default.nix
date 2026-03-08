@@ -4,14 +4,18 @@
   config,
   ...
 }: {
-  imports = [./settings.nix ./keymap.nix];
   home.sessionVariables = {
-    TERMCMD = lib.mkIf config.programs.yazi.enable "${config.home.sessionVariables.TERMINAL} --class file-picker -e yazi";
+    TERMCMD =
+      lib.mkIf config.programs.yazi.enable
+      "${config.home.sessionVariables.TERMINAL} --class file-picker -e yazi";
   };
   home.packages = lib.mkIf config.programs.yazi.enable [pkgs.ouch];
   programs.yazi = {
     enable = true;
     shellWrapperName = "y";
+    theme = import ./theme.nix;
+    keymap = import ./keymap.nix;
+    settings = import ./settings.nix;
     plugins = with pkgs.yaziPlugins; {
       inherit smart-paste;
       inherit wl-clipboard;

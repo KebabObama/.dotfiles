@@ -32,13 +32,12 @@ in {
           userHome = config.users.users.${user}.home;
           userGroup = config.users.users.${user}.group;
         in ''
-          userConfigDir="${userHome}/.config/sops/age"
+          userConfigDir="${userHome}/.config/sops-nix/age"
           if [ -d "${userHome}" ]; then
             mkdir -p "$userConfigDir"
             cp "$globalKeyFile" "$userConfigDir/keys.txt"
-            # Ensure the user owns their .config/sops stack
-            chown -R ${user}:${userGroup} "${userHome}/.config/sops"
-            chmod 700 "${userHome}/.config/sops"
+            chown -R ${user}:${userGroup} "${userHome}/.config/sops-nix"
+            chmod 700 "${userHome}/.config/sops-nix"
             chmod 700 "$userConfigDir"
             chmod 600 "$userConfigDir/keys.txt"
           fi

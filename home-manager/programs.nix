@@ -10,7 +10,7 @@
   ];
 
   sops = {
-    age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
+    age.keyFile = "/home/${user}/.config/sops-nix/age/keys.txt";
   };
 
   programs = {

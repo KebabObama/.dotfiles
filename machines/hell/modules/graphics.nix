@@ -46,7 +46,7 @@
         offload = {
           enable = true;
           enableOffloadCmd = true;
-          offloadCmdMainProgram = "nv";
+          offloadCmdMainProgram = "nvidia-offload";
         };
       };
     };
