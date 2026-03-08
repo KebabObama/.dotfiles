@@ -12,7 +12,6 @@ in {
     settings = {
       notifications = {
         device_added = false;
-        device_removed = false;
       };
 
       program_options = {

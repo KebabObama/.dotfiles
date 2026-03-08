@@ -7,14 +7,14 @@
     enable = true;
     extraConfig = {
       general.unsafe-accounts-conf = true;
-      compose.editor = "vim";
+      compose.editor = "$EDITOR";
       filters = {
         "text/plain" = "colorize";
         "text/calendar" = "calendar";
         "text/html" = "html | colorize";
         "message/delivery-status" = "colorize";
         "message/rfc822" = "colorize";
-        "application/pdf" = "vim";
+        "application/pdf" = "$EDITOR";
       };
     };
   };

@@ -14,6 +14,12 @@
     kernelModules = ["kvm-intel"];
     extraModulePackages = [];
   };
+  systemd.sleep.settings.Sleep._freeformOptions = ''
+    AllowSuspend=yes
+    AllowHibernation=yes
+    AllowSuspendThenHibernate=no
+    HibernateDelaySec=30min
+  '';
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

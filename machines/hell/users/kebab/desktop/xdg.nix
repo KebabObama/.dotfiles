@@ -18,7 +18,7 @@
     mimeApps = {
       enable = true;
       defaultApplications = {
-        "inode/directory" = ["superfile.desktop"];
+        "inode/directory" = ["yazi.desktop"];
         "text/*" = ["vim.desktop" "code.desktop"];
         "text/plain" = ["vim.desktop" "code.desktop"];
         "application/json" = ["vim.desktop" "code.desktop"];

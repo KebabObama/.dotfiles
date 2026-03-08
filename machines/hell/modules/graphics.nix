@@ -9,7 +9,7 @@
       displayManager.startx.enable = true;
       desktopManager.xterm.enable = false;
       deviceSection = ''Option "TearFree" "true"'';
-      videoDrivers = ["nvidia" "modesetting"];
+      videoDrivers = ["nvidia"];
     };
   };
 

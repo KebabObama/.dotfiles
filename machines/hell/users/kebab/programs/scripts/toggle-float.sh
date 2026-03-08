@@ -3,7 +3,7 @@
 case "$(hyprctl activewindow -j | jq -r '"\(.floating):\(.pinned)"')" in
 "false:false")
   hyprctl dispatch togglefloating >/dev/null
-  hyprctl dispatch resizeactive exact 60% 60% >/dev/null
+  hyprctl dispatch resizeactive exact 50% 50% >/dev/null
   hyprctl dispatch centerwindow >/dev/null
   ;;
 "true:false")

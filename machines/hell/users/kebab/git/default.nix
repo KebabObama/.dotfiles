@@ -30,7 +30,7 @@ in {
       url."https://github.com/".insteadOf = "github:";
       user.name = "KebabaObama";
       user.email = "lucaschyba@gmail.com";
-      credential.helper = "${gitHelper}";
+      credential.helper = toString gitHelper;
     };
   };
 }
