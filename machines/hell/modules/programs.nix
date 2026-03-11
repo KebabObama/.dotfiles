@@ -1,9 +1,9 @@
 {pkgs, ...}: {
   preferSingleUser = true;
+  boot.tmp.useTmpfs = true;
 
   services.scx.enable = true;
   services.scx.scheduler = "scx_rustland";
-
   programs = {
     nano.enable = false;
     anime-game-launcher.enable = true;
