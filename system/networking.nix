@@ -16,20 +16,15 @@
 
     openssh = {
       enable = lib.mkDefault false;
-      settings.PrintMotd = lib.mkDefault false;
+      settings.PrintMotd = lib.mkDefault true;
       hostKeys = [];
+      openFirewall = lib.mkDefault true;
     };
 
     printing = {
       enable = lib.mkDefault false;
       webInterface = lib.mkDefault true;
       defaultShared = lib.mkDefault true;
-      drivers = lib.mkBefore (with pkgs; [
-        cups-filters
-        cups-browsed
-        canon-cups-ufr2
-        cnijfilter2
-      ]);
     };
   };
 
@@ -50,14 +45,17 @@
   networking = {
     hostName = host;
     enableIPv6 = lib.mkDefault true;
-    firewall.enable = lib.mkDefault false;
     nameservers = lib.mkDefault ["1.1.1.1" "8.8.8.8" "8.8.4.4"];
+    firewall = {
+      enable = lib.mkDefault false;
+      allowPing = lib.mkDefault true;
+    };
     networkmanager = {
       enable = lib.mkDefault true;
       dhcp = lib.mkDefault "internal";
       dns = lib.mkDefault "systemd-resolved";
       wifi = {
-        powersave = lib.mkDefault false;
+        powersave = lib.mkDefault true;
         backend = lib.mkDefault "iwd";
         scanRandMacAddress = lib.mkDefault false;
       };

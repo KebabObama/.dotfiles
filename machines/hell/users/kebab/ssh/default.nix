@@ -17,5 +17,6 @@ in {
 
   sops.secrets = lib.genAttrs (builtins.attrNames hosts) (_: {
     sopsFile = ./tokens.yaml;
+    mode = "0600";
   });
 }
