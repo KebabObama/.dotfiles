@@ -112,7 +112,7 @@
         commands = {
           logout = ["caelestia-shell" "kill"];
           shutdown = ["systemctl" "poweroff"];
-          hibernate = ["systemctl" "hibernate"];
+          hibernate = ["systemctl" "sleep"];
           reboot = ["systemctl" "reboot"];
         };
       };

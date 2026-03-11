@@ -198,7 +198,7 @@
           description = "Suspend then hibernate";
           command = [
             "systemctl"
-            "suspend-then-hibernate"
+            "sleep"
           ];
           enabled = true;
         }

@@ -51,9 +51,9 @@
     decoration = {
       rounding = 18;
       active_opacity = 1.0;
-      inactive_opacity = 0.8;
+      inactive_opacity = 0.95;
       dim_inactive = true;
-      dim_strength = 0.3;
+      dim_strength = 0.2;
       shadow.enabled = false;
       blur = {
         enabled = true;
