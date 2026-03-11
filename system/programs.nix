@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  config,
   inputs,
   ...
 }: {
@@ -30,7 +29,7 @@
     };
 
     nh = {
-      enable = lib.mkDefault (!config.useInternalPackages);
+      enable = lib.mkDefault true;
       flake = "$HOME/.dotfiles";
       clean.enable = lib.mkDefault true;
       clean.extraArgs = lib.mkDefault "--keep 5 --keep-since 5d";
