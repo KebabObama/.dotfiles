@@ -7,19 +7,36 @@
   modulesPath,
   ...
 }: {
-  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
-  boot = {
-    initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"];
-    initrd.kernelModules = [];
-    kernelModules = ["kvm-intel"];
-    extraModulePackages = [];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
+
+  boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"];
+  boot.initrd.kernelModules = [];
+  boot.kernelModules = ["kvm-intel"];
+  boot.extraModulePackages = [];
+
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/a7103408-dec3-48ee-8c07-8380d873fd33";
+    fsType = "ext4";
   };
-  systemd.sleep.settings.Sleep._freeformOptions = ''
-    AllowSuspend=yes
-    AllowHibernation=yes
-    AllowSuspendThenHibernate=no
-    HibernateDelaySec=30min
-  '';
+
+  fileSystems."/bin" = {
+    device = "/usr/bin";
+    fsType = "none";
+    options = ["bind"];
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/8880-6E68";
+    fsType = "vfat";
+    options = ["fmask=0077" "dmask=0077"];
+  };
+
+  swapDevices = [
+    {device = "/dev/disk/by-uuid/2ee7827b-333f-4163-aa3c-9a2124c84672";}
+  ];
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
