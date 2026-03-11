@@ -3,17 +3,10 @@
   lib,
   config,
   inputs,
-  self,
   ...
-}: let
-  internalPackages =
-    if config.useInternalPackages
-    then (builtins.attrValues self.packages.${pkgs.stdenv.hostPlatform.system})
-    else [];
-in {
+}: {
   environment.systemPackages =
-    internalPackages
-    ++ [inputs.disko.packages.${pkgs.stdenv.hostPlatform.system}.default]
+    [inputs.disko.packages.${pkgs.stdenv.hostPlatform.system}.default]
     ++ (with pkgs; [
       git
       wget

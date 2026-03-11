@@ -9,29 +9,20 @@
   hostConfigs = functions.mkHostConfigs;
   pkgs = nixpkgs.legacyPackages.${definitions.system};
   installScripts = lib.mapAttrs (host: _: functions.mkInstallScript pkgs host) hostConfigs;
-  home-manager = host: data: {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    extraSpecialArgs = definitions // {inherit functions host data;};
-    users = lib.genAttrs data.users (user: {
-      imports = functions.getHomeModules host user;
-      _module.args = {inherit user host data functions;};
-    });
-  };
 in {
   #################################
   # NixOS Configurations
   #################################
 
-  nixosConfigurations =
-    lib.mapAttrs
-    (host: data:
-      lib.nixosSystem {
-        inherit (definitions) system;
-        specialArgs = definitions // {inherit functions host data;};
-        modules = functions.getNixosModules host ++ [{home-manager = home-manager host data;}];
-      })
-    hostConfigs;
+  nixosConfigurations = lib.mapAttrs (host: data: let
+    args = definitions // {inherit functions host data;};
+  in
+    lib.nixosSystem {
+      inherit (definitions) system;
+      specialArgs = args;
+      modules = functions.getNixosModules host ++ [{home-manager = functions.mkHmModule args;}];
+    })
+  hostConfigs;
 
   #################################
   # nix run commands
@@ -39,12 +30,4 @@ in {
 
   apps.${definitions.system} =
     functions.mkInstallApps definitions.system installScripts;
-
-  #################################
-  # Rebuild script
-  #################################
-
-  packages.${definitions.system} = {
-    default = functions.mkRebuild pkgs;
-  };
 }

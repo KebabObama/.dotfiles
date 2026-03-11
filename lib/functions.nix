@@ -19,9 +19,7 @@
 
   getDirs = dir:
     if (builtins.pathExists dir)
-    then
-      lib.attrNames
-      (lib.filterAttrs (_: type: type == "directory") (builtins.readDir dir))
+    then lib.attrNames (lib.filterAttrs (_: type: type == "directory") (builtins.readDir dir))
     else [];
 
   scanForModules = dir:
@@ -44,13 +42,9 @@
     lib.genAttrs
     (getDirs (getPath (lib.head (lib.splitString "/<host>" hostModulesTemplate))))
     (hostname: rec {
-      userParentDir =
-        lib.head (lib.splitString "/<user>" (fill userModulesTemplate {host = hostname;}));
-
+      userParentDir = lib.head (lib.splitString "/<user>" (fill userModulesTemplate {host = hostname;}));
       users = getDirs (getPath userParentDir);
-
-      firstUser = assert builtins.length users > 0;
-        lib.head users;
+      firstUser = assert builtins.length users > 0; lib.head users;
     });
 
   mkInstallScript = pkgs: host:
@@ -63,34 +57,6 @@
         --build-on-remote \
         "$@"
     '';
-
-  mkRebuild = pkgs:
-    pkgs.writeShellApplication {
-      name = "rebuild";
-      meta.description = "Rebuild hosts.";
-      runtimeInputs = with pkgs; [
-        nixos-rebuild
-        coreutils
-        hostname
-      ];
-      text = ''
-        # bash
-        MODE="switch"
-        HOST="$(hostname)"
-        if [ $# -ge 1 ]; then
-          case "$1" in
-            switch|boot|test|build|dry-build|dry-activate)
-              MODE="$1"; shift;;
-          esac
-        fi
-        if [ $# -gt 0 ] && [[ ! "$1" =~ ^- ]]; then
-          HOST="$1"
-          shift
-        fi
-        echo "Rebuilding host: $HOST (mode: $MODE)"
-        exec sudo nixos-rebuild "$MODE" --flake "$HOME/.dotfiles#$HOST" "$@"
-      '';
-    };
 
   mkInstallApps = _: installScripts:
     lib.mapAttrs'
@@ -111,6 +77,16 @@
         name: _: pkgs.writeScriptBin (lib.removeSuffix ".sh" name) (builtins.readFile (dir + "/${name}"))
       ))
     ];
+
+  mkHmModule = args: {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = args;
+    users = lib.genAttrs args.data.users (user: {
+      imports = getHomeModules args.host user;
+      _module.args = args // {inherit user;};
+    });
+  };
 
   getNixosModules = host:
     scanForModules (getPath staticNixosSystem) ++ scanForModules (getPath (fill hostModulesTemplate {inherit host;}));

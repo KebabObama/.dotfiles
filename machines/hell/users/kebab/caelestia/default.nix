@@ -63,7 +63,7 @@
 
       dashboard = {
         enabled = true;
-        showOnHover = false;
+        showOnHover = true;
         dragThreshold = 30;
         updateInterval = 1000;
         mediaUpdateInterval = 1000;

@@ -2,6 +2,8 @@
   home.sessionVariables.TERMINAL = "kitty";
   programs.kitty = {
     enable = true;
+    font.size = 12;
+    font.name = "JetBrains Mono";
     settings = {
       confirm_os_window_close = 0;
       background_opacity = 0.8;
