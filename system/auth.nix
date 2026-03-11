@@ -57,7 +57,7 @@
     };
   };
 
-  specialisation = lib.mkIf (config.preferSingleUser && !config.boot.secure) {
+  specialisation = lib.mkIf config.preferSingleUser {
     multi-user.configuration.services.displayManager.autoLogin.enable = false;
   };
 }
