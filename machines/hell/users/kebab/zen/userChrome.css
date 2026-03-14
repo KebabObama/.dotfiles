@@ -149,6 +149,12 @@ toolbar .toolbarbutton-1 {
     border: none !important;
 }*/
 
+.titlebar-min,
+.titlebar-max,
+.titlebar-restore {
+  display: none !important;
+}
+
 /* Styles the search options */
 .search-one-offs {
   border-top: none !important;

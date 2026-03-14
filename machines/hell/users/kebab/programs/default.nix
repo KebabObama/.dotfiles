@@ -15,7 +15,6 @@
       android-studio
       upscayl
       sqlit-tui
-      nix-output-monitor
     ]);
 
   programs = {

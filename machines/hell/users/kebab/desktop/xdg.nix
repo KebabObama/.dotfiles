@@ -5,9 +5,20 @@
 
     portal = {
       enable = true;
-      config.hyprland.default = ["gtk" "hyprland"];
-      config.hyprland."org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
       xdgOpenUsePortal = true;
+      config = {
+        hyprland = {
+          default = ["hyprland" "gtk"];
+          "org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
+          "org.freedesktop.impl.portal.Screencast" = ["hyprland"];
+          "org.freedesktop.impl.portal.Screenshot" = ["hyprland"];
+        };
+        common = {
+          default = ["gtk"];
+          "org.freedesktop.impl.portal.Screencast" = ["hyprland"];
+          "org.freedesktop.impl.portal.Screenshot" = ["hyprland"];
+        };
+      };
       extraPortals = with pkgs; [
         xdg-desktop-portal-termfilechooser
         xdg-desktop-portal-hyprland

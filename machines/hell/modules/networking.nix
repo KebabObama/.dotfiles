@@ -24,8 +24,9 @@
   networking = {
     firewall = {
       enable = true;
-      allowedTCPPorts = [22];
-      trustedInterfaces = ["virbr0"];
+      allowedTCPPorts = [7236 7250];
+      allowedUDPPorts = [7236 5353];
+      trustedInterfaces = ["virbr0" "p2p-wl+"];
       allowedTCPPortRanges = [
         {
           from = 8000;

@@ -41,7 +41,7 @@
       autoNumlock = lib.mkDefault true;
       wayland.enable = lib.mkDefault true;
       wayland.compositor = lib.mkDefault "kwin";
-      theme = lib.mkDefault "where_is_my_sddm_theme";
+      theme = "where_is_my_sddm_theme";
       extraPackages = [pkgs.kdePackages.qt5compat];
       settings = {
         Theme = {

@@ -49,6 +49,7 @@
     firewall = {
       enable = lib.mkDefault false;
       allowPing = lib.mkDefault true;
+      allowedTCPPorts = [22 21];
     };
     networkmanager = {
       enable = lib.mkDefault true;

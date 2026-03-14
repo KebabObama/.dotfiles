@@ -5,5 +5,6 @@
     alsa.support32Bit = lib.mkDefault true;
     pulse.enable = lib.mkDefault true;
     lowLatency.enable = lib.mkDefault false;
+    wireplumber.enable = lib.mkDefault true;
   };
 }

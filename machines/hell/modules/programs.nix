@@ -2,8 +2,16 @@
   preferSingleUser = true;
   boot.tmp.useTmpfs = true;
 
-  services.scx.enable = true;
-  services.scx.scheduler = "scx_rustland";
+  services = {
+    scx.enable = true;
+    scx.scheduler = "scx_rustland";
+    sunshine = {
+      enable = false;
+      autoStart = false;
+      openFirewall = true;
+    };
+  };
+
   programs = {
     nano.enable = false;
     anime-game-launcher.enable = true;

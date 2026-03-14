@@ -5,7 +5,7 @@
 }: let
   hosts = {
     "final-boss" = {
-      hostname = "139.68.88.160";
+      hostname = "138.68.88.160";
       user = "root";
     };
   };
